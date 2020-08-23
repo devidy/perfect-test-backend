@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ClienteRequest;
+use App\Models\Cliente;
 
 use Illuminate\Http\Request;
-use App\Http\Services\ClienteService;
 use Symfony\Component\HttpFoundation\Response;
+use App\Http\Resources\Cliente as ClienteResource;
+use App\Http\Services\ClienteService;
+use App\Http\Requests\ClienteRequest;
 
 class ClienteController extends Controller
 {
@@ -44,8 +46,9 @@ class ClienteController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Cliente $cliente)
     {
+        return new FuncionarioResource($funcionario);
     }
 
     /**
