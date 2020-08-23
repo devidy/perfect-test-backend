@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Venda;
 use App\Http\Resources\VendaCollection;
+use App\Http\Resources\Venda as VendaResource;
 use App\Http\Requests\VendaRequest;
 
 use Illuminate\Http\Request;
@@ -41,9 +42,9 @@ class VendaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Venda $venda)
     {
-        //
+        return new VendaResource($venda);
     }
 
     /**
