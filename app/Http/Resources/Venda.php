@@ -16,12 +16,12 @@ class Venda extends JsonResource
     {
         return [
             'id' => $this->id,
-            "produto_id" => $this->produto_id,
-            "cliente_id" => $this->cliente_id,
             "quantidade" => $this->quantidade,
             "desconto" => $this->desconto,
             "status" => $this->status,
-            "data_venda" => $this->created_ad
+            "data_venda" => $this->created_at,
+            "cliente" => $this->cliente,
+            "produto" => $this->produto
         ];  
     }
 }
