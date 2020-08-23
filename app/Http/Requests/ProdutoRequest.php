@@ -26,7 +26,7 @@ class ProdutoRequest extends FormRequest
         return [
             'nome' => 'required|max:255',
             'descricao' => 'required|max:255',
-            'preco' => 'required|numeric|between:0,99.99'
+            'preco' => 'required|numeric|min:100'
         ];
     }
 }
