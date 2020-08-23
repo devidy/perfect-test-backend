@@ -18,7 +18,7 @@ class CreateVendasTable extends Migration
             $table->foreignId('produto_id')->constrained('produtos');
             $table->foreignId('cliente_id')->constrained('clientes');
             $table->integer('quantidade');
-            $table->float('desconto', 10, 2);
+            $table->float('desconto', 10, 2)->default(0);
             $table->integer('status')->nullable(false)->default(1);            $table->timestamps();
         });
     }
