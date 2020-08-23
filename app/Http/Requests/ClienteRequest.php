@@ -23,10 +23,17 @@ class ClienteRequest extends FormRequest
      */
     public function rules()
     {
-        return [
+        $rules = [
             'nome' => 'required|max:255',
-            'cpf' => 'required|unique:clientes|max:11|min:11',
-            'email' => 'required|unique:clientes'
         ];
+        if ($this->method() === 'POST') {
+            $rules['email'] =  'required|unique:clientes';
+            $rules['cpf'] = 'required|max:11|min:11|unique:clientes';
+        } else {
+            $clienteId = $this->cliente->id;
+            $rules['email'] = 'required|unique:clientes,email,'  . $clienteId;
+            $rules['cpf'] = 'required|max:11|min:11|unique:clientes,cpf,' . $clienteId;
+        }
+        return $rules;
     }
 }
