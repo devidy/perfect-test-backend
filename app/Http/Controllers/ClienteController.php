@@ -48,7 +48,7 @@ class ClienteController extends Controller
      */
     public function show(Cliente $cliente)
     {
-        return new FuncionarioResource($funcionario);
+        return new ClienteResource($cliente);
     }
 
     /**
@@ -58,9 +58,10 @@ class ClienteController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ClienteRequest $request, Cliente $cliente)
     {
-        //
+        $cliente->update($request->all());
+        return [];
     }
 
     /**
