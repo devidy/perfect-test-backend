@@ -19,7 +19,7 @@ class Venda extends JsonResource
             "quantidade" => $this->quantidade,
             "desconto" => $this->desconto,
             "status" => $this->status,
-            "data_venda" => $this->created_at,
+            "data_venda" => $this->created_at->format('d-m-Y H:00'),
             "cliente" => $this->cliente,
             "produto" => $this->produto
         ];  
