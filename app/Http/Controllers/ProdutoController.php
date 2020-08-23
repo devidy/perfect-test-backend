@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Produto;
 use App\Http\Resources\Produto as ProdutoResource;
 use App\Http\Resources\ProdutoCollection;
+use App\Http\Requests\ProdutoRequest;
 
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -30,9 +31,9 @@ class ProdutoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ProdutoRequest $request)
     {
-        //
+        return Produto::create($request->all());
     }
 
     /**
