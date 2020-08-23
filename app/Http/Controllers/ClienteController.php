@@ -7,6 +7,7 @@ use App\Models\Cliente;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use App\Http\Resources\Cliente as ClienteResource;
+use App\Http\Resources\ClienteCollection;
 use App\Http\Services\ClienteService;
 use App\Http\Requests\ClienteRequest;
 
@@ -25,7 +26,10 @@ class ClienteController extends Controller
      */
     public function index()
     {
-        //
+        $clientes = Cliente::paginate(10);
+        return (new ClienteCollection($clientes))
+                    ->response()
+                    ->setStatusCode(Response::HTTP_OK);
     }
 
     /**
@@ -62,16 +66,5 @@ class ClienteController extends Controller
     {
         $cliente->update($request->all());
         return [];
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 }
