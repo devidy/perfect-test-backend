@@ -23,3 +23,8 @@ Route::get('/produtos', 'ProdutoController@index');
 Route::get('/produtos/{produto}', 'ProdutoController@show');
 Route::post('/produtos', 'ProdutoController@store');
 Route::put('/produtos/{produto}', 'ProdutoController@update');
+
+Route::get('/vendas', 'VendaController@index');
+Route::get('/vendas/{venda}', 'VendaController@show');
+Route::post('/vendas', 'VendaController@store');
+Route::put('/vendas/{venda}', 'VendaController@update');
