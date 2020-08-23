@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ClienteRequest;
-use App\Models\Cliente;
 
 use Illuminate\Http\Request;
 use App\Http\Services\ClienteService;
@@ -35,7 +34,8 @@ class ClienteController extends Controller
      */
     public function store(ClienteRequest $request)
     {
-        return Cliente::create($request->all());
+        $dadosCliente = $request->all();
+        return $this->service->store($dadosCliente);
     }
 
     /**
@@ -46,7 +46,6 @@ class ClienteController extends Controller
      */
     public function show($id)
     {
-        return $this->service->getClienteById($id);
     }
 
     /**
