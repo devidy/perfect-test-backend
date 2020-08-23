@@ -24,4 +24,8 @@ class ClienteService
         return $this->model->find($id);
     }
 
+    public function updateCliente($dadosCliente, $id)
+    {
+
+    }
 }
