@@ -12,9 +12,16 @@ class ClienteService
 	public function __construct(Cliente $model)
 	{
 		$this->model = $model;
-	}
+    }
+
     public function store($dadosCliente)
     {
         return $this->model->create($dadosCliente);
     }
+
+    public function getClienteById($id)
+    {
+        return $this->model->find($id);
+    }
+
 }
