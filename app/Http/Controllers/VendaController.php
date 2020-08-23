@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Venda;
 use App\Http\Resources\VendaCollection;
+use App\Http\Requests\VendaRequest;
 
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -29,9 +30,9 @@ class VendaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(VendaRequest $request)
     {
-        //
+        return Venda::create($request->all());
     }
 
     /**
