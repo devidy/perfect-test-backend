@@ -18,4 +18,8 @@ Route::get('/clientes', 'ClienteController@index');
 Route::get('/clientes/{cliente}', 'ClienteController@show');
 Route::post('/clientes', 'ClienteController@store');
 Route::put('/clientes/{cliente}', 'ClienteController@update');
-Route::delete('/clientes/{cliente}', 'ClienteController@destroy');
+
+Route::get('/produtos', 'ProdutoController@index');
+Route::get('/produtos/{produto}', 'ProdutoController@show');
+Route::post('/produtos', 'ProdutoController@store');
+Route::put('/produtos/{produto}', 'ProdutoController@update');
