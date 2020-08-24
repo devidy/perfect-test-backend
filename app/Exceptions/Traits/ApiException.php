@@ -99,7 +99,7 @@ trait ApiException {
         return response()->json([
             "errors" => [
                 [
-                    "status" => $status,
+                    "status_http" => $status,
                     "code" => $code,
                     "message" => $message
                 ]
