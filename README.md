@@ -1,36 +1,22 @@
- # Você quer ser um desenvolvedor Backend na Perfectpay? 
- O desafio é desenvolver um sistema de vendas onde consiste um cadastro de produtos, o próprio cadastro de vendas onde será preenchido alguns dados também referente a cliente, uma dashboard onde estará
-centralizado os dados de produtos, consulta de vendas e um relatório simplificado de vendas.
  
  # Instruções
- - O foco principal do nosso teste é o backend. Para facilitar você poderá utilizar os blade.php que disponibilizamos no projeto.
- - Fique à vontade para usar bibliotecas/componentes externos
- - Seguir princípios **CLEAN CODE** 
- - Utilize boas práticas de programação
- - Utilize boas práticas de git
- - Documentar como rodar o projeto
- 
- # Requisitos
- - O sistema deverá ser desenvolvido utilizando a linguagem PHP no framework Laravel.
- - Você deve criar um CRUD que permita cadastrar as seguintes informações:
- 	- **Produto**: Nome, Descrição e Preço.
- 	- **Venda**: Produto,Data da venda, Quantidade do produto, Desconto, Status da venda.
-	- **Cliente**: Nome, Email, CPF.
- - Salvar as informações necessárias em um banco de dados (relacional) de preferência MySql.
- - Exibir todos os dados na dashboard conforme exemplo deixado na blade.php.
+* Com o terminal aberto na pasta do projeto, executar o comando: php -r "file_exists('.env') || copy('.env.example', '.env');"
+* Configurar a conexão de banco de dados no arquivo .env
+* Com o terminal aberto na pasta do projeto, executar o comando: composer install
+* Com o terminal aberto na pasta do projeto, executar o comando: php artisan serve
 
- 
- # Opcionais
- - Testes automatizados com informação da cobertura de testes
- - Upload de imagem no cadastro de produtos
- 
- # O que será avaliado
- - Estrutura e organização do código e dos arquivos
- - Qualidade
- - Enfim, tudo será observado e levado em conta
- 
- # Como iniciar o desenvolvimento
- - Fork esse repositório na sua conta do GitHub.
- - Crie uma branch com o nome desafio
- 
- Qualquer dúvida sobre o teste, fique a vontade para entrar em contato conosco.
+ # Rotas no Postman
+* link para importar rotas no postman https://www.getpostman.com/collections/2fe490d52546a00405a9
+* Caso o link não funcione é só entrar em contato devidy.oliveira@gmail.com que eu gero outro ou envio a collection por email.
+
+
+## Exceções
+
+1. ✅ Retorna erro **404** recurso não encontrado
+2. ✅ Retorna erro **405** se o verbo http estiver incorreto
+3. ✅ Retorna erro **422** se um parametro obrigatório não for passado
+4. ✅ Retorna erro **500** erro interno no servidor
+
+## License
+
+[MIT license](https://opensource.org/licenses/MIT).
