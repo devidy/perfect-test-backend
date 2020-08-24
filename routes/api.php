@@ -25,7 +25,7 @@ Route::post('/produtos', 'ProdutoController@store');
 Route::put('/produtos/{produto}', 'ProdutoController@update');
 
 Route::get('/vendas', 'VendaController@index');
-Route::get('/vendas/total-status', 'VendaController@getTotalVendasStatus');
+Route::get('/vendas/total-status', 'VendaController@getVendasAgrupadasPorStatus');
 Route::get('/vendas/{venda}', 'VendaController@show');
 Route::post('/vendas', 'VendaController@store');
 Route::put('/vendas/{venda}', 'VendaController@update');
