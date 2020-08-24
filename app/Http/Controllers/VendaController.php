@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class VendaController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
@@ -24,17 +25,11 @@ class VendaController extends Controller
             $queryParams = $request->query();
             
             if (array_key_exists("range_date", $request->query()) && array_key_exists("cliente_id", $request->query()) ) {
-                $rangeDate = $queryParams['range_date'];
-                $arrayDate = explode('-', $rangeDate);
-                $from = new \DateTime($arrayDate[0]);
-                $to = new \DateTime($arrayDate[1]);
-                $vendas = Venda::where('cliente_id',$queryParams['cliente_id'])->whereBetween('data_venda', [$from->format('Y-d-m H:i:s'), $to->format('Y-d-m H:i:s')])->paginate(10);
+                $arrayDates = $this->transformaData($queryParams['range_date']);
+                $vendas = Venda::where('cliente_id',$queryParams['cliente_id'])->whereBetween('data_venda', [$arrayDates[0], $arrayDates[1]])->paginate(10);
             } else if (array_key_exists("range_date", $request->query())) {
-                $rangeDate = $queryParams['range_date'];
-                $arrayDate = explode('-', $rangeDate);
-                $from = new \DateTime($arrayDate[0]);
-                $to = new \DateTime($arrayDate[1]);
-                $vendas = Venda::whereBetween('data_venda', [$from->format('Y-d-m H:i:s'), $to->format('Y-d-m H:i:s')])->paginate(10);
+                $arrayDates = $this->transformaData($queryParams['range_date']);
+                $vendas = Venda::whereBetween('data_venda', [$arrayDates[0], $arrayDates[1]])->paginate(10);
             } else {
                 $vendas = Venda::where('cliente_id',$queryParams['cliente_id'])->paginate(10);
             }
@@ -47,6 +42,19 @@ class VendaController extends Controller
         return (new VendaCollection($vendas))
                     ->response()
                     ->setStatusCode(Response::HTTP_OK);
+    }
+
+    public function transformaData($rangeDate)
+    {
+        $arrayDates = explode('-', $rangeDate);
+        $initialDateArray = explode('/', $arrayDates[0]);
+        $finalDateArray = explode('/', $arrayDates[1]);
+        $initialDate =  $initialDateArray[2] . $initialDateArray[1] . $initialDateArray[0];
+        $finalDate =  $finalDateArray[2] . $finalDateArray[1] . $finalDateArray[0];
+
+        $from = new \DateTime($initialDate);
+        $to = new \DateTime($finalDate);
+        return [$from->format('Y-m-d H:i:s'),$to->format('Y-m-d H:i:s')];
     }
 
     /**
@@ -62,7 +70,19 @@ class VendaController extends Controller
         $desconto = array_key_exists("desconto", $dadosVenda) ? $dadosVenda['desconto'] : 0;
         $dadosVenda['total'] = ($produto->preco * $dadosVenda['quantidade']) - $desconto;
         $dadosVenda['data_venda'] = new \DateTime($dadosVenda['data_venda']);
+        $dadosVenda['status'] = $this->getStatusInNumber($dadosVenda['status']);
         return Venda::create($dadosVenda);
+    }
+
+    public function getStatusInNumber($statusString)
+    {
+        if($statusString === 'Cancelado') {
+            return 0;
+        } else if ($statusString === 'Aprovado') {
+            return 1;
+        } else {
+            return 2;
+        }
     }
 
     /**
@@ -87,6 +107,7 @@ class VendaController extends Controller
     {
         $dadosVenda = $request->all();
         $dadosVenda['data_venda'] = new \DateTime($dadosVenda['data_venda']);
+        $dadosVenda['status'] = $this->getStatusInNumber($dadosVenda['status']);
         $venda->update($dadosVenda);
         return [];
     }
@@ -96,7 +117,7 @@ class VendaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function getTotalVendasStatus()
+    public function getVendasAgrupadasPorStatus()
     {
         $vendas = Venda::with('produto')->get();
         $totalCancelados = $vendas->where('status', 0)->count();
