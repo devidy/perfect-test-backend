@@ -4,15 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Models\Cliente;
 
-use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\Response;
 use App\Http\Resources\Cliente as ClienteResource;
 use App\Http\Resources\ClienteCollection;
 use App\Http\Services\ClienteService;
 use App\Http\Requests\ClienteRequest;
 
+use App\Http\Traits\ApiResponse;
+
 class ClienteController extends Controller
 {
+    use ApiResponse;
+
     protected $service;
 
     public function __construct(ClienteService $service){
@@ -27,9 +29,7 @@ class ClienteController extends Controller
     public function index()
     {
         $clientes = Cliente::where('status', 1)->paginate(10);
-        return (new ClienteCollection($clientes))
-                    ->response()
-                    ->setStatusCode(Response::HTTP_OK);
+        return new ClienteCollection($clientes);
     }
 
     /**
@@ -40,8 +40,7 @@ class ClienteController extends Controller
      */
     public function store(ClienteRequest $request)
     {
-        $dadosCliente = $request->all();
-        return $this->service->store($dadosCliente);
+        return $this->successfullyCreated(Cliente::create($request->all()), 06);
     }
 
     /**
@@ -52,7 +51,8 @@ class ClienteController extends Controller
      */
     public function show(Cliente $cliente)
     {
-        return new ClienteResource($cliente);
+        return $this->successfulResponse(new ClienteResource($cliente), 05, 'Sucesso');
+
     }
 
     /**
@@ -65,6 +65,6 @@ class ClienteController extends Controller
     public function update(ClienteRequest $request, Cliente $cliente)
     {
         $cliente->update($request->all());
-        return [];
+        return $this->successfulResponse($cliente, 07, 'Atualizado');
     }
 }

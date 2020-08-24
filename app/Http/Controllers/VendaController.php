@@ -11,8 +11,11 @@ use App\Http\Requests\VendaRequest;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+use App\Http\Traits\ApiResponse;
+
 class VendaController extends Controller
 {
+    use ApiResponse;
 
     /**
      * Display a listing of the resource.
@@ -39,9 +42,7 @@ class VendaController extends Controller
             $vendas = Venda::paginate(10);
         }
 
-        return (new VendaCollection($vendas))
-                    ->response()
-                    ->setStatusCode(Response::HTTP_OK);
+        return new VendaCollection($vendas);
     }
 
     public function transformaData($rangeDate)
@@ -71,7 +72,7 @@ class VendaController extends Controller
         $dadosVenda['total'] = ($produto->preco * $dadosVenda['quantidade']) - $desconto;
         $dadosVenda['data_venda'] = new \DateTime($dadosVenda['data_venda']);
         $dadosVenda['status'] = $this->getStatusInNumber($dadosVenda['status']);
-        return Venda::create($dadosVenda);
+        return $this->successfullyCreated(Venda::create($dadosVenda), 06);
     }
 
     public function getStatusInNumber($statusString)
@@ -93,7 +94,7 @@ class VendaController extends Controller
      */
     public function show(Venda $venda)
     {
-        return new VendaResource($venda);
+        return $this->successfulResponse(new VendaResource($venda), 05, 'Sucesso');
     }
 
     /**
@@ -109,7 +110,7 @@ class VendaController extends Controller
         $dadosVenda['data_venda'] = new \DateTime($dadosVenda['data_venda']);
         $dadosVenda['status'] = $this->getStatusInNumber($dadosVenda['status']);
         $venda->update($dadosVenda);
-        return [];
+        return $this->successfulResponse($venda, 07, 'Atualizado');
     }
 
         /**
@@ -142,6 +143,6 @@ class VendaController extends Controller
                 "Valor Total" => $valorDevolvidos
             ]
         ];
-        return response()->json($data, Response::HTTP_OK);
+        return $this->successfulResponse($data, 05, 'Sucesso');
     }
 }

@@ -3,15 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Models\Produto;
+
 use App\Http\Resources\Produto as ProdutoResource;
 use App\Http\Resources\ProdutoCollection;
 use App\Http\Requests\ProdutoRequest;
 
-use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\Response;
+use App\Http\Traits\ApiResponse;
 
 class ProdutoController extends Controller
 {
+    use ApiResponse;
+
     /**
      * Display a listing of the resource.
      *
@@ -20,9 +22,7 @@ class ProdutoController extends Controller
     public function index()
     {
         $produtos = Produto::where('status', 1)->paginate(10);
-        return (new ProdutoCollection($produtos))
-                    ->response()
-                    ->setStatusCode(Response::HTTP_OK);
+        return new ProdutoCollection($produtos);
     }
 
     /**
@@ -33,7 +33,7 @@ class ProdutoController extends Controller
      */
     public function store(ProdutoRequest $request)
     {
-        return Produto::create($request->all());
+        return $this->successfullyCreated(Produto::create($request->all()), 06);
     }
 
     /**
@@ -44,7 +44,7 @@ class ProdutoController extends Controller
      */
     public function show(Produto $produto)
     {
-        return new ProdutoResource($produto);
+        return $this->successfulResponse(new ProdutoResource($produto), 05, 'Sucesso');
     }
 
     /**
@@ -57,6 +57,6 @@ class ProdutoController extends Controller
     public function update(ProdutoRequest $request, Produto $produto)
     {
         $produto->update($request->all());
-        return [];
+        return $this->successfulResponse($produto, 07, 'Atualizado');
     }
 }
