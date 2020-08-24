@@ -6,6 +6,7 @@
 * Com o terminal aberto na pasta do projeto, executar o comando: php artisan serve
 
  # Rotas no Postman
+* No readme original ficou aberto a questão de usar o blade que já estava no projeto, então eu criei uma api rest
 * link para importar rotas no postman https://www.getpostman.com/collections/2fe490d52546a00405a9
 * Caso o link não funcione é só entrar em contato devidy.oliveira@gmail.com que eu gero outro ou envio a collection por email.
 
