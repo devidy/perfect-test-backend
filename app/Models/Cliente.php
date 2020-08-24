@@ -13,6 +13,6 @@ class Cliente extends Model
      * 
      * @var array
      */
-    protected $fillable = ['nome', 'cpf', 'email'];
+    protected $fillable = ['nome', 'cpf', 'email', 'status'];
 
 }

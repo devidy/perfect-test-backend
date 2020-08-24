@@ -26,7 +26,7 @@ class ClienteController extends Controller
      */
     public function index()
     {
-        $clientes = Cliente::paginate(10);
+        $clientes = Cliente::where('status', 1)->paginate(10);
         return (new ClienteCollection($clientes))
                     ->response()
                     ->setStatusCode(Response::HTTP_OK);
