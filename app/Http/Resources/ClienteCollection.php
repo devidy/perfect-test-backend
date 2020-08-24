@@ -3,6 +3,8 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
+use Symfony\Component\HttpFoundation\Response;
+
 
 class ClienteCollection extends ResourceCollection
 {
@@ -16,6 +18,12 @@ class ClienteCollection extends ResourceCollection
     public function toArray($request)
     {
         return [
+            'success' => [
+                "status_http" => Response::HTTP_OK,
+                "code" => 05,
+                "message" => 'Sucesso',
+            ],
+            'total' => count($this->collection),
             'data' => $this->collection
         ];
     }
