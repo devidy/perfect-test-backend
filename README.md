@@ -10,6 +10,8 @@
 * link para importar rotas no postman https://www.getpostman.com/collections/2fe490d52546a00405a9
 * Caso o link não funcione é só entrar em contato devidy.oliveira@gmail.com que eu gero outro ou envio a collection por email.
 
+ # Observação
+ * Gostaria de ter adicionado uma camada para cuidar do db e ter separado mais as coisas do framework da aplicação, mas não deu tempo.
 
 ## Exceções
 
