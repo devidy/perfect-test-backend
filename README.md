@@ -7,17 +7,23 @@
 
  # Rotas no Postman
 * No readme original ficou aberto a questão de usar o blade que já estava no projeto, então eu criei uma api rest
-* link para importar rotas no postman https://www.getpostman.com/collections/2fe490d52546a00405a9
+
+* CLique no botão abaixo para importar a collection com as rotas postman 
+
+  [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/2fe490d52546a00405a9)
+
+* As rotas foram criadas no endereço http://localhost:8000, caso você esteja utilizando outro endereço ou porta é substituir as urls
 * Caso o link não funcione é só entrar em contato devidy.oliveira@gmail.com que eu gero outro ou envio a collection por email.
 
- # Observação
- * Gostaria de ter adicionado uma camada para cuidar do db e ter separado mais as coisas do framework da aplicação, mas não deu tempo.
+## Respostas
+1. Http status code 200 "Sucesso"
+2. Http status code 201 "Criado com sucesso"
 
 ## Exceções
 
 1. ✅ Retorna erro **404** recurso não encontrado
 2. ✅ Retorna erro **405** se o verbo http estiver incorreto
-3. ✅ Retorna erro **422** se um parametro obrigatório não for passado
+3. ✅ Retorna erro **422** se um parametro obrigatório não for passado ou não atenda as regras de validação
 4. ✅ Retorna erro **500** erro interno no servidor
 
 ## License
