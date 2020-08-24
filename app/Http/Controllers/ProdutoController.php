@@ -19,7 +19,7 @@ class ProdutoController extends Controller
      */
     public function index()
     {
-        $produtos = Produto::paginate(10);
+        $produtos = Produto::where('status', 1)->paginate(10);
         return (new ProdutoCollection($produtos))
                     ->response()
                     ->setStatusCode(Response::HTTP_OK);
