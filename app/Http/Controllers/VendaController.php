@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Venda;
+use App\Models\Produto;
 use App\Http\Resources\VendaCollection;
 use App\Http\Resources\Venda as VendaResource;
 use App\Http\Requests\VendaRequest;
@@ -32,8 +33,13 @@ class VendaController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(VendaRequest $request)
-    {
-        return Venda::create($request->all());
+    {   
+        $dadosVenda = $request->all();
+        $produto = Produto::find($dadosVenda['produto_id']);
+        $desconto = array_key_exists("desconto", $dadosVenda) ? $dadosVenda['desconto'] : 0;
+        $dadosVenda['total'] = ($produto->preco * $dadosVenda['quantidade']) - $desconto;
+        $dadosVenda['data_venda'] = new \DateTime($dadosVenda['data_venda']);
+        return Venda::create($dadosVenda);
     }
 
     /**
@@ -56,7 +62,42 @@ class VendaController extends Controller
      */
     public function update(VendaRequest $request, Venda $venda)
     {
-        $venda->update($request->all());
+        $dadosVenda = $request->all();
+        $dadosVenda['data_venda'] = new \DateTime($dadosVenda['data_venda']);
+        $venda->update($dadosVenda);
         return [];
+    }
+
+        /**
+     * 
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getTotalVendasStatus()
+    {
+        $vendas = Venda::with('produto')->get();
+        $totalCancelados = $vendas->where('status', 0)->count();
+        $totalVendidos = $vendas->where('status', 1)->count();
+        $totalDevolvidos = $vendas->where('status', 2)->count();
+
+        $valorCancelados = $vendas->where('status', 0)->sum('total');
+        $valorVendidos = $vendas->where('status', 1)->sum('total');
+        $valorDevolvidos = $vendas->where('status', 2)->sum('total');
+
+        $data = [
+            'Cancelados' => [
+                "Quantidade" => $totalCancelados,
+                "Valor Total" => $valorCancelados
+            ],
+            'Vendidos' => [
+                "Quantidade" => $totalVendidos,
+                "Valor Total" => $valorVendidos
+            ],
+            'Devolvidos' => [
+                "Quantidade" => $totalDevolvidos,
+                "Valor Total" => $valorDevolvidos
+            ]
+        ];
+        return response()->json($data, Response::HTTP_OK);
     }
 }
