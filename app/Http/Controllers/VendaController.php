@@ -18,9 +18,32 @@ class VendaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        $vendas = Venda::paginate(10);
+    public function index(Request $request)
+    {        
+        if ($request->query()) {
+            $queryParams = $request->query();
+            
+            if (array_key_exists("range_date", $request->query()) && array_key_exists("cliente_id", $request->query()) ) {
+                $rangeDate = $queryParams['range_date'];
+                $arrayDate = explode('-', $rangeDate);
+                $from = new \DateTime($arrayDate[0]);
+                $to = new \DateTime($arrayDate[1]);
+                $vendas = Venda::where('cliente_id',$queryParams['cliente_id'])->whereBetween('data_venda', [$from->format('Y-d-m H:i:s'), $to->format('Y-d-m H:i:s')])->paginate(10);
+            } else if (array_key_exists("range_date", $request->query())) {
+                $rangeDate = $queryParams['range_date'];
+                $arrayDate = explode('-', $rangeDate);
+                $from = new \DateTime($arrayDate[0]);
+                $to = new \DateTime($arrayDate[1]);
+                $vendas = Venda::whereBetween('data_venda', [$from->format('Y-d-m H:i:s'), $to->format('Y-d-m H:i:s')])->paginate(10);
+            } else {
+                $vendas = Venda::where('cliente_id',$queryParams['cliente_id'])->paginate(10);
+            }
+
+
+        } else {
+            $vendas = Venda::paginate(10);
+        }
+
         return (new VendaCollection($vendas))
                     ->response()
                     ->setStatusCode(Response::HTTP_OK);
