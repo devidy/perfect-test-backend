@@ -11,10 +11,10 @@ class Venda extends Model
      * 
      * @var array
      */
-    protected $fillable = ['produto_id', 'cliente_id', 'quantidade', 'status', 'desconto'];
+    protected $fillable = ['produto_id', 'cliente_id', 'quantidade', 'status', 'desconto', 'total', 'data_venda'];
 
     protected $casts = [
-        'created_at' => 'datetime:d-m-Y H:00'
+        'data_venda' => 'datetime:d-m-Y H:00'
     ];
 
     public function cliente()
