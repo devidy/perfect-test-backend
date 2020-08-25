@@ -4,6 +4,7 @@
 * Configurar a conexão de banco de dados no arquivo .env
 * Com o terminal aberto na pasta do projeto, executar o comando: composer install
 * Com o terminal aberto na pasta do projeto, executar o comando: php artisan serve
+* Com o terminal aberto na pasta do projeto, executar o comando: php artisan migrate
 
  # Rotas no Postman
 * No readme original ficou aberto a questão de usar o blade que já estava no projeto, então eu criei uma api rest
